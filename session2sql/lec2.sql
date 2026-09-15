@@ -17,7 +17,9 @@ INSERT INTO `students` (id, name, email) VALUES (3, 'mahmoud', 'mahmoud@gmail.co
 INSERT INTO `students` (id, name, email) VALUES (4, 'yasser', 'yasser@gmail.com');
 INSERT INTO `students` (id, name, email) VALUES (5, 'ebrahim', 'ebrahim@gmail.com');
 
-INSERT INTO `instructors` (name, email) VALUES ('islam', 'islam@gmail.com');
+INSERT INTO `instructors` (name, email) VALUES ('islam', 'islam@email.com');
+INSERT INTO `instructors` (name, email) VALUES ('zeyad', 'zeyad@email.com');
+INSERT INTO `instructors` (name, email) VALUES ('hamdy', 'hamdy@email.com');
 
 INSERT INTO enrollments (`student_id`, `course_id`) VALUES (1 , 3);
 INSERT INTO enrollments (`student_id`, `course_id`) VALUES (2 , 1);
