@@ -21,6 +21,10 @@ INSERT INTO `instructors` (name, email) VALUES ('islam', 'islam@email.com');
 INSERT INTO `instructors` (name, email) VALUES ('zeyad', 'zeyad@email.com');
 INSERT INTO `instructors` (name, email) VALUES ('hamdy', 'hamdy@email.com');
 
+INSERT INTO `courses` (course_id, course_name, instructor_id) VALUES (1, 'PHP', 1);
+INSERT INTO `courses` (course_id, course_name, instructor_id) VALUES (2, 'MYSQL', 2);
+INSERT INTO `courses` (course_id, course_name, instructor_id) VALUES (3, 'C#', 3);
+
 INSERT INTO enrollments (`student_id`, `course_id`) VALUES (1 , 3);
 INSERT INTO enrollments (`student_id`, `course_id`) VALUES (2 , 1);
 INSERT INTO enrollments (`student_id`, `course_id`) VALUES (3 , 2);
