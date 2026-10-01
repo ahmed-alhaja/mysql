@@ -1,9 +1,9 @@
 <?php
 session_start();
 require_once dirname(__FILE__, 2) . '/config/config.php';
-require_once dirname(__FILE__, 2) . '/config/connectionDatabase.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['title'])) {
+    require_once dirname(__FILE__, 2) . '/config/connectionDatabase.php';
     $title = trim(htmlspecialchars(htmlentities($_POST['title'])));
     $sql = "INSERT INTO `users`
     (`title`) VALUES ('$title')";

@@ -15,13 +15,22 @@ mysqli_close($conn);
 $conn = mysqli_connect('localhost', 'root', '', 'todoapp');
 
 
-$sql =
-    "ALTER TABLE users
- ADD is_completed BOOLEAN DEFAULT TRUE , 
- ADD created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP";
-
+$sql = "SHOW COLUMNS FROM users LIKE 'is_completed'";
 $result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) == 0) {
+    mysqli_query($conn, "ALTER TABLE users
+                         ADD is_completed BOOLEAN DEFAULT TRUE");
+}
+
+$sql = "SHOW COLUMNS FROM users LIKE 'created_at'";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) === 0) {
+    mysqli_query($conn, "ALTER TABLE users
+                          ADD created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+}
 echo mysqli_error($conn);
 
 mysqli_close($conn);
-var_dump($conn);
+// var_dump($conn);

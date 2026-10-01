@@ -1,6 +1,8 @@
 <?php
+require_once dirname(__FILE__, 3) . '/controller/showController.php';
 require_once dirname(__FILE__, 3) . '/inc/layouts.php';
-require_once dirname(__FILE__, 3) . '/config/config.php'
+require_once dirname(__FILE__, 3) . '/config/config.php';
+// var_dump($allData[0]['title']);
 ?>
 <?php if (isset($_SESSION['succes'])): ?>
 
@@ -12,38 +14,75 @@ require_once dirname(__FILE__, 3) . '/config/config.php'
     <?php unset($_SESSION['succes']); ?>
 
 <?php endif; ?>
-<div class="min-h-screen flex flex-col items-center py-8 px-4 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
 
-    <h1 class="text-4xl font-extrabold text-white mb-6 drop-shadow-lg">
+
+
+
+
+<div class="min-h-screen flex flex-col items-center bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-6">
+
+    <!-- Title -->
+    <h1 class="text-4xl font-extrabold text-white drop-shadow-lg mt-6 mb-6">
         My Todos
     </h1>
 
-    <div class="w-full max-w-xl space-y-3">
+    <!-- Todo Table -->
+    <div class="w-full max-w-xl overflow-hidden rounded-xl shadow-lg">
 
-        <!-- Todo -->
-        <div class="bg-white/90 backdrop-blur-md rounded-xl shadow-lg p-4 flex items-center justify-between">
+        <table class="w-full bg-white/90 backdrop-blur-md">
 
-            <div>
-                <h2 class="text-lg font-bold text-gray-800">
-                    Learn PHP
-                </h2>
+            <thead>
+                <tr class="border-b border-gray-200">
+                    <th class="px-4 py-3 text-left text-sm font-bold text-gray-800">
+                        Todo
+                    </th>
 
-                <p class="text-xs text-gray-500 mt-1">
-                    Created: 30 Sep 2026
-                </p>
-            </div>
+                    <th class="px-4 py-3 text-left text-sm font-bold text-gray-800">
+                        Created
+                    </th>
 
-            <div class="flex gap-2">
-                <button class="px-3 py-1.5 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
-                    Edit
-                </button>
+                    <th class="px-4 py-3 text-right text-sm font-bold text-gray-800">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
 
-                <button class="px-3 py-1.5 text-sm bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition">
-                    Delete
-                </button>
-            </div>
+            <tbody>
+                <?php foreach ($allData as $data): ?>
+                    <tr class="hover:bg-white/60 transition">
 
-        </div>
+                        <td class="px-4 py-4">
+                            <h2 class="text-lg font-bold text-gray-800">
+                                <?= $data['title'] ?>
+                            </h2>
+                        </td>
+
+                        <td class="px-4 py-4">
+                            <p class="text-xs text-gray-500">
+                                <?= $data['created_at'] ?>
+                            </p>
+                        </td>
+
+                        <td class="px-4 py-4">
+                            <div class="flex justify-end gap-2">
+                                <button class="px-3 py-1.5 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+                                    Edit
+                                </button>
+                                <button class="px-3 py-1.5 text-sm bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition">
+                                    <a href="<?= BASE_URL . 'controller/deleteController.php?id=' .  $data['id'] ?>">
+                                        Delete
+                                    </a>
+                                </button>
+
+                            </div>
+                        </td>
+
+                    </tr>
+                <?php endforeach; ?>
+                <?php unset($_SESSION['allData']); ?>
+            </tbody>
+
+        </table>
 
     </div>
 
