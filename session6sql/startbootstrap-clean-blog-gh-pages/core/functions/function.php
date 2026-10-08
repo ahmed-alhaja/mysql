@@ -64,11 +64,28 @@ function loginUser($email, $password)
         exit;
     }
 }
-function storeBlog($title, $content, $image) 
+function storeBlog($title, $content, $image)
 {
-     $conn = $GLOBALS['conn'];
-     // Image 
-     
-    $sql = "INSERT INTO `blogs` (title, content, image)
-     VALUES ('$title', '$content' , '$image')";
+    $conn = $GLOBALS['conn'];
+    // Image 
+    $fileName = $image['name'];
+    $fullPath = dirname(__FILE__, 3) . "/assets/img" . "/" . $fileName;
+    $relativePath = '/assets/img/' . $fileName;
+    $moved =  move_uploaded_file($image['tmp_name'], $fullPath);
+    var_dump($moved);
+    $sql = "INSERT INTO `blogs` (title, content, image , created_at)
+     VALUES ('$title', '$content' , '$relativePath', NOW())";
+    $res = mysqli_query($conn, $sql);
+    if ($res) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function getBlog()
+{
+    $conn = $GLOBALS['conn'];
+    $sql = "SELECT * FROM blogs";
+    $res = mysqli_query($conn, $sql);
+    return mysqli_fetch_all($res, MYSQLI_ASSOC);
 }
