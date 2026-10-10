@@ -34,7 +34,18 @@ switch ($_GET['page'] ?? 'home') {
     case 'create_blog':
         require_once dirname(__FILE__) . '/views/blogs/create.php';
         break;
+    case 'editBlog':
+        require_once dirname(__FILE__) . '/views/blogs/edit.php';
+        break;
     case 'add_blog':
+        require_once dirname(__FILE__) . '/actions/controller/blogs/blogController.php';
+        store();
+        break;
+    case 'updateBlog':
+        require_once dirname(__FILE__) . '/actions/controller/blogs/blogController.php';
+        update();
+        break;
+    case 'deleteBlog':
         require_once dirname(__FILE__) . '/actions/controller/blogs/blogController.php';
         break;
     case 'sign-in':

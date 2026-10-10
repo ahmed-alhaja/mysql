@@ -1,8 +1,13 @@
-<?php require_once dirname(__FILE__, 2) . '/config/config.php'; ?>
-<!-- Layouts -->
-<?php require_once dirname(__FILE__, 2) . '/inc/layouts.php'; ?>
-<!-- Navigation-->
-<?php require_once dirname(__FILE__ , 2) . '/inc/nav.php';
+<?php
+require_once dirname(__FILE__, 2) . '/config/config.php';
+// Layouts
+require_once dirname(__FILE__, 2) . '/inc/layouts.php';
+// Navigation
+require_once dirname(__FILE__, 2) . '/inc/nav.php';
+?>
+<?php
+$blogs = getBlog();
+// var_dump($blogs);
 ?>
 
 
@@ -11,65 +16,74 @@
 <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
-            <!-- Post preview-->
-            <div class="post-preview">
-                <a href="post.html">
-                    <h2 class="post-title">Man must explore, and this is exploration at its greatest</h2>
-                    <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
-                </a>
-                <p class="post-meta">
-                    Posted by
-                    <a href="#!">Start Bootstrap</a>
-                    on September 24, 2023
-                </p>
-            </div>
-            <!-- Divider-->
-            <hr class="my-4" />
-            <!-- Post preview-->
-            <div class="post-preview">
-                <a href="post.html">
-                    <h2 class="post-title">I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.</h2>
-                </a>
-                <p class="post-meta">
-                    Posted by
-                    <a href="#!">Start Bootstrap</a>
-                    on September 18, 2023
-                </p>
-            </div>
-            <!-- Divider-->
-            <hr class="my-4" />
-            <!-- Post preview-->
-            <div class="post-preview">
-                <a href="post.html">
-                    <h2 class="post-title">Science has not yet mastered prophecy</h2>
-                    <h3 class="post-subtitle">We predict too much for the next year and yet far too little for the next ten.</h3>
-                </a>
-                <p class="post-meta">
-                    Posted by
-                    <a href="#!">Start Bootstrap</a>
-                    on August 24, 2023
-                </p>
-            </div>
-            <!-- Divider-->
-            <hr class="my-4" />
-            <!-- Post preview-->
-            <div class="post-preview">
-                <a href="post.html">
-                    <h2 class="post-title">Failure is not an option</h2>
-                    <h3 class="post-subtitle">Many say exploration is part of our destiny, but it’s actually our duty to future generations.</h3>
-                </a>
-                <p class="post-meta">
-                    Posted by
-                    <a href="#!">Start Bootstrap</a>
-                    on July 8, 2023
-                </p>
-            </div>
-            <!-- Divider-->
-            <hr class="my-4" />
-            <!-- Pager-->
-            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+
+            <?php foreach ($blogs as $blog) : ?>
+
+                <div class="post-preview mb-5 pb-4 border-bottom">
+
+                    <div class="row align-items-center">
+
+                        <div class="col-md-8">
+
+                            <a class="text-decoration-none text-dark">
+
+                                <h2 class="post-title">
+                                    <?= $blog['title'] ?>
+                                </h2>
+
+                                <h3 class="post-subtitle">
+                                    <?= $blog['content'] ?>
+                                </h3>
+
+                            </a>
+
+                            <p class="text-muted mt-3 mb-2">
+                                <?= $blog['created_at'] ?>
+                            </p>
+                            <div class="container mt-3">
+                                <div class="d-flex gap-2">
+
+                                    <div>
+                                        <form action="index.php?page=deleteBlog&action=delete" method="POST">
+                                            <input type="hidden" name="id" value="<?= $blog['id'] ?>">
+
+                                            <button type="submit" class="btn btn-danger btn-sm px-3">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    <div>
+                                        <a href="index.php?page=editBlog&id=<?= $blog['id'] ?>">
+                                            <input type="hidden" name="id" value="<?= $blog['id'] ?>">
+
+                                            <button type="submit" class="btn btn-success btn-sm px-3">
+                                                Edit
+                                            </button>
+
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4 text-center">
+
+                            <img src="<?= $blog['image'] ?>"
+                                class="img-fluid rounded"
+                                style="width: 200px; height: 140px; object-fit: cover;" />
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <?php endforeach ?>
+
         </div>
     </div>
 </div>
-<!-- Footer-->
 <?php require_once dirname(__FILE__, 2) . '/inc/footer.php'; ?>

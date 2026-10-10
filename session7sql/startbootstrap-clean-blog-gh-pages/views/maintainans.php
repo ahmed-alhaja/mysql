@@ -1,11 +1,3 @@
-<?php
-require_once dirname(__FILE__, 2) . '/config/config.php';
-
-// Layouts 
-require_once dirname(__FILE__, 2) . '/inc/layouts.php';
-
-?>
-
 <header class="masthead" style="background-image: url('<?= BASE_URL ?>assets/img/home-bg.jpg')">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">

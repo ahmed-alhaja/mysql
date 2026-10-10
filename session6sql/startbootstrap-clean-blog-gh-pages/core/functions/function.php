@@ -5,7 +5,8 @@ if (!isset($_SESSION)) {
 }
 
 
-function setMessage($message, $type)
+function
+setMessage($message, $type)
 {
     $_SESSION['message'] = [
         "type" => $type,
@@ -25,8 +26,8 @@ function showMessage()
     }
 }
 
-
-function registerUser($name, $email, $phone, $password)
+function
+registerUser($name, $email, $phone, $password)
 {
     $conn = $GLOBALS['conn'];
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -41,7 +42,8 @@ function registerUser($name, $email, $phone, $password)
         return true;
     }
 }
-function loginUser($email, $password)
+function
+loginUser($email, $password)
 {
     $conn = $GLOBALS['conn'];
     $sql = "SELECT * FROM users WHERE email = '$email'";
@@ -64,7 +66,8 @@ function loginUser($email, $password)
         exit;
     }
 }
-function storeBlog($title, $content, $image)
+function
+storeBlog($title, $content, $image)
 {
     $conn = $GLOBALS['conn'];
     // Image 
@@ -82,10 +85,73 @@ function storeBlog($title, $content, $image)
         return false;
     }
 }
-function getBlog()
+function
+getBlog()
 {
     $conn = $GLOBALS['conn'];
     $sql = "SELECT * FROM blogs";
     $res = mysqli_query($conn, $sql);
     return mysqli_fetch_all($res, MYSQLI_ASSOC);
+}
+function
+deleteBlog($id)
+{
+    $conn = $GLOBALS['conn'];
+    $sql = "DELETE FROM `blogs` WHERE `id` = $id";
+    $res = mysqli_query($conn, $sql);
+    if ($res) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function
+findBlog($id)
+{
+    $conn = $GLOBALS['conn'];
+    $sql = "SELECT * FROM blogs WHERE id = $id";
+    $res = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($res) === 0) {
+        setMessage('Blog not found', 'danger');
+        header("Location: " . BASE_URL . "index.php?page=login");
+        exit;
+    }
+    return mysqli_fetch_assoc($res);
+}
+
+function updateBlog($id, $title, $content, $image)
+{
+    $conn = $GLOBALS['conn'];
+    // Image 
+
+    $blog = findBlog($id);
+    $relativePath = '/assets/img/' . $blog['image'];
+    if ($blog['image'] && $image['name']) {
+        unlink($relativePath);
+        $fileName = $image['name'];
+        $fullPath = dirname(__FILE__, 3) . "/assets/img" . "/" . $fileName;
+        $relativePath = '/assets/img/' . $fileName;
+        move_uploaded_file($image['tmp_name'], $fullPath);
+        $sql = "UPDATE `blogs` SET `title` = '$title', `content` = '$content', `image` = '$relativePath' WHERE `id` = $id";
+        $res = mysqli_query($conn, $sql);
+        if ($res) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    if (!$blog['image'] && $image['name']) {
+        $fileName = $image['name'];
+        $fullPath = dirname(__FILE__, 3) . "/assets/img" . "/" . $fileName;
+        $relativePath = '/assets/img/' . $fileName;
+        move_uploaded_file($image['tmp_name'], $fullPath);
+        $sql = "UPDATE `blogs` SET `title` = '$title', `content` = '$content', `image` = '$relativePath' WHERE `id` = $id";
+        $res = mysqli_query($conn, $sql);
+        if ($res) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

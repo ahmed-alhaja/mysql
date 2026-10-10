@@ -17,7 +17,7 @@ echo mysqli_error($conn);
 $sql = "CREATE TABLE IF NOT EXISTS blogs (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `title` VARCHAR(100) NOT NULL,
-    `content` VARCHAR(150) NOT NULL ,
+    `content` VARCHAR(150)  NULL ,
     `user_id` VARCHAR(20) NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )";

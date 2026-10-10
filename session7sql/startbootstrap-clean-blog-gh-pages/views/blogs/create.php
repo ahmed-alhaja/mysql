@@ -8,7 +8,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="<?= BASE_URL ?>index.php?page=add_blog" method="POST" enctype="multipart/form-data">
+                    <form action="<?= BASE_URL ?>index.php?page=add_blog&action=store" method="POST" enctype="multipart/form-data">
 
                         <!-- Title -->
                         <div class="mb-3">
