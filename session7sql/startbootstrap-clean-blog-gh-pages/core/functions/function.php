@@ -126,9 +126,16 @@ function updateBlog($id, $title, $content, $image)
     // Image 
 
     $blog = findBlog($id);
-    $relativePath = '/assets/img/' . $blog['image'];
-    if ($blog['image'] && $image['name']) {
-        unlink($relativePath);
+    // $relativePath = '/assets/img' . $blog['image'];
+    // var_dump(dirname(__FILE__, 3) . $blog['image'] . "<br>");
+    // var_dump(file_exists(dirname(__FILE__, 3) . $blog['image']));
+    // die;
+    if (
+        $blog['image']
+        && $image['name']
+        && file_exists(dirname(__FILE__, 3) . $blog['image'])
+    ) {
+        unlink(dirname(__FILE__, 3) . $blog['image']);
         $fileName = $image['name'];
         $fullPath = dirname(__FILE__, 3) . "/assets/img" . "/" . $fileName;
         $relativePath = '/assets/img/' . $fileName;
@@ -141,6 +148,7 @@ function updateBlog($id, $title, $content, $image)
             return false;
         }
     }
+
     if (!$blog['image'] && $image['name']) {
         $fileName = $image['name'];
         $fullPath = dirname(__FILE__, 3) . "/assets/img" . "/" . $fileName;
